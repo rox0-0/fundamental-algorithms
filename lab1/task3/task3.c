@@ -138,6 +138,26 @@ int main(int argc, char*argv[])
     
     break;
     
+    case 't':
+    if (argc!=6 || (sscanf(argv[2], "%lf", &eps) != 1)||(sscanf(argv[3], "%lf", &a) != 1)||(sscanf(argv[4], "%lf", &b) != 1)
+    ||(sscanf(argv[5], "%lf", &c) != 1)) return WRONG_INPUT_ERROR;
+    if (eps<0)return WRONG_INPUT_ERROR;
+    if (fabs(a*a + b*b - c*c )< eps)
+    {
+        printf("Существует прямоугольный треугольник с катетами a=%lf, b=%lf, и гипотенузой c=%lf\n", a,b,c);
     }
+    else if (fabs(a*a + c*c - b*b) < eps)
+    {
+        printf("Существует прямоугольный треугольник с катетами a=%lf, b=%lf, и гипотенузой c=%lf\n", a,c,b);
+    }
+    else if (fabs(b*b + c*c - a*a )< eps)
+    {
+        printf("Существует прямоугольный треугольник с катетами a=%lf, b=%lf, и гипотенузой c=%lf\n", b,c,a);
+    }
+    else printf("Введенные числа не могут являться длинами сторон прямоугольного треугольника\n");
+    
+    break;
+    }
+    return OK;
     
 }
