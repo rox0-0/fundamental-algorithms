@@ -55,7 +55,7 @@ int main(int argc, char*argv[])
     }; 
  
     double eps,a,b, c;
- 
+    long int first_number, second_number;
     switch (argv[1][1]) 
     { 
     case 'h':
@@ -73,7 +73,7 @@ int main(int argc, char*argv[])
         else printf("x1=%lf, x2=%lf\n", x1,x2);
     }
     
-    x1=0, x2=0;
+   
     printf("a=%lf, b=%lf, c=%lf\n", a, c, b);
     if (solution(eps, a, c, b, &x1, &x2) == WRONG_INPUT_ERROR) printf("Решений нет\n") ;
     else if (solution(eps, a, c, b, &x1, &x2) == ANY){ printf("Решением является любое вещественное число\n");}
@@ -83,7 +83,7 @@ int main(int argc, char*argv[])
         else printf("x1=%lf, x2=%lf\n", x1,x2);
     }
     
-     x1=0, x2=0;
+     
     printf("a=%lf, b=%lf, c=%lf\n", b, a, c);
     if (solution(eps, b, a, c, &x1, &x2) == WRONG_INPUT_ERROR) printf("Решений нет\n") ;
     else if (solution(eps, b, a, c, &x1, &x2) == ANY){ printf("Решением является любое вещественное число\n");}
@@ -93,7 +93,7 @@ int main(int argc, char*argv[])
         else printf("x1=%lf, x2=%lf\n", x1,x2);
     }
     
-     x1=0, x2=0;
+   
     printf("a=%lf, b=%lf, c=%lf\n", b, c, a);
     if (solution(eps, b, c, a, &x1, &x2) == WRONG_INPUT_ERROR) printf("Решений нет\n") ;
     else if (solution(eps, b, c, a, &x1, &x2) == ANY){ printf("Решением является любое вещественное число\n");}
@@ -102,8 +102,7 @@ int main(int argc, char*argv[])
         if (fabs(x1-x2)<eps) printf("x=%lf\n", x1);
         else printf("x1=%lf, x2=%lf\n", x1,x2);
     }
-    
-     x1=0, x2=0;
+   
     printf("a=%lf, b=%lf, c=%lf\n", c, a, b);
     if (solution(eps, c, a, b, &x1, &x2) == WRONG_INPUT_ERROR) printf("Решений нет\n") ;
     else if (solution(eps, c, a, b, &x1, &x2) == ANY){ printf("Решением является любое вещественное число\n");}
@@ -113,7 +112,7 @@ int main(int argc, char*argv[])
         else printf("x1=%lf, x2=%lf\n", x1,x2);
     }
     
-    x1=0, x2=0;
+   
     printf("a=%lf, b=%lf, c=%lf\n", c, b, a);
     if (solution(eps, c, b, a, &x1, &x2) == WRONG_INPUT_ERROR) printf("Решений нет\n") ;
     else if (solution(eps, c, b, a, &x1, &x2) == ANY){ printf("Решением является любое вещественное число\n");}
@@ -123,6 +122,22 @@ int main(int argc, char*argv[])
         else printf("x1=%lf, x2=%lf\n", x1,x2);
     }
     break;
+    case 'm':
+    
+    if (argc!=4 || (sscanf(argv[2], "%ld", &first_number) != 1) || (sscanf(argv[3], "%ld", &second_number) != 1)) return WRONG_INPUT_ERROR;
+    if (first_number==0 || second_number == 0) return WRONG_INPUT_ERROR;
+    if (first_number%second_number==0 && first_number>=second_number)
+    {
+    
+        printf("Число a=%ld кратно b=%ld\n", first_number, second_number );
+    }
+    else
+    {
+        printf("Введенные числа не кратны друг другу\n");
+    }
+    
+    break;
+    
     }
     
 }
