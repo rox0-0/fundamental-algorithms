@@ -187,14 +187,29 @@ double gamma_row(double eps)
     double s1 = 0.0; 
     double s2 = 0.5; 
     int k = 2; 
+    double root = 0.0;
     while (fabs(s2 - s1) >= eps) 
     { 
-        s1 = s2; 
-        k++; 
-        s2 += 1.0 / (pow(floor(sqrt(k)), 2)) - 1.0 / k; 
+
+        s1 = s2;
+        k++;
+        root = sqrt(k);
+        if (fmod(root,1.0) == 0)
+            {
+                k++;
+                root = (int)pow(k, 1. / 2.0);
+            }
+        s2 += 1.0 / pow((int)root, 2.0) - 1.0 / k;
     } 
-    return s2 - pow(PI, 2); 
-} 
+    return s2 -pow(PI, 2)/6; 
+}
+
+double eq_pi(double eps)
+{
+    
+}
+
+
 int main() 
 { 
     double eps; 
