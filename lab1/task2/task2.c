@@ -7,6 +7,7 @@
 #include <ctype.h> 
 #define ll long int; 
 #define PI 3.14159265358979323846 
+#define E 2.718281828459045235360
 typedef enum  
 { 
     OK, 
@@ -28,6 +29,18 @@ long int faq(int  n)
     return res; 
     } 
 } 
+int is_prime(int p)
+{
+    if (p==1 || p==2) return 1;
+    else 
+    {
+        for (int i=2; i*i<=p; ++i)
+        {
+            if (p%i==0)return 0;
+        }
+        return 1;
+    }
+}
 
 double sum(int n)
 {
@@ -97,12 +110,7 @@ double limit_sqrt2(double eps)
  
 } 
  
-long int comb(int m, int k) 
-{ 
-    if (k == 0 || k == m || m == 0) 
-        return 1;
-    return faq(m)/(faq(k)*faq(m-k)); 
-} 
+
  
 double limit_gamma(double eps) 
 { 
@@ -197,16 +205,100 @@ double gamma_row(double eps)
         if (fmod(root,1.0) == 0)
             {
                 k++;
-                root = (int)pow(k, 1. / 2.0);
+                root = (int)pow(k, 1.0 / 2.0);
             }
         s2 += 1.0 / pow((int)root, 2.0) - 1.0 / k;
     } 
     return s2 -pow(PI, 2)/6; 
 }
 
-double eq_pi(double eps)
+double e_eqt(double eps)
 {
-    
+    double mid = 0.0;
+    double left_bound = 2.0;
+    double right_bound = 3.0;
+    mid = (left_bound + right_bound) / 2;
+
+    while (fabs(log(mid) - 1) > eps)
+    {
+        mid = (left_bound + right_bound) / 2;
+        if (log(mid) < 1)
+            left_bound = mid;
+        else
+            right_bound = mid;
+    }
+    return mid;
+}
+
+double pi_eqt(double eps)
+{
+    double mid = 0.0;
+    double left_bound = 3.0;
+    double right_bound = 4.0;
+    mid = (left_bound + right_bound) / 2;
+
+    while (fabs(cos(mid) + 1) > eps)
+    {
+        mid = (left_bound + right_bound) / 2;
+        if (sin(mid) >0 )
+            left_bound = mid;
+        else
+            right_bound = mid;
+    }
+    return mid;
+}
+
+double ln2_eqt(double eps)
+{
+    double mid = 0.0;
+    double left_bound = 0.0;
+    double right_bound = 1.0;
+    mid = (left_bound + right_bound) / 2;
+
+    while (fabs(pow(E, mid) -2) > eps)
+    {
+        mid = (left_bound + right_bound) / 2;
+        if (pow(E, mid) <2 )
+            left_bound = mid;
+        else
+            right_bound = mid;
+    }
+    return mid;
+}
+
+double sqrt2_eqt(double eps)
+{
+    double mid = 0.0;
+    double left_bound = 1.0;
+    double right_bound = 2.0;
+    mid = (left_bound + right_bound) / 2;
+
+    while (fabs(pow(mid, 2) -2) > eps)
+    {
+        mid = (left_bound + right_bound) / 2;
+        if (pow(mid, 2) <2 )
+            left_bound = mid;
+        else
+            right_bound = mid;
+    }
+    return mid;
+}
+
+double gamma_eqt(double eps)
+{
+    int p = 2;
+    double s1 = 0.0;
+    double s2 = log(2) * 0.5;
+    double product = 0.5;
+    while (fabs(s2-s1)>eps)
+    {
+        s1 = s2;
+        while (!is_prime(p))p++;
+        
+        product *= (p - 1.0) / (double)p;
+        s2 = log(p) * product;
+    } 
+    return (-log(s2));
 }
 
 
@@ -224,4 +316,9 @@ int main()
     printf("%lf\n", ln2_row(0.000001)); 
     printf("%lf\n", sqrt2_row(0.000001)); 
     printf("%lf\n", gamma_row(0.000001)); 
+    printf("%lf\n", e_eqt(0.000001)); 
+    printf("%lf\n", pi_eqt(0.000001));
+    printf("%lf\n", ln2_eqt(0.000001));
+    printf("%lf\n", sqrt2_eqt(0.000001));
+    printf("%lf\n", gamma_eqt(0.000001));
 }
