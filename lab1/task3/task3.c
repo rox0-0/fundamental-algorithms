@@ -5,10 +5,7 @@
 #include <limits.h> 
 #include <math.h> 
 #include <ctype.h> 
-#define ll long int; 
-//sscanf - проверка целочисленного введенного числа 
-//if (sscanf("-123.45", "%lf", &d)==1) то корректно иначе нет; 
-// %g экспоненциальный ввод числа %e 
+
 typedef enum  
 { 
     OK, 
@@ -157,6 +154,9 @@ int main(int argc, char*argv[])
     else printf("Введенные числа не могут являться длинами сторон прямоугольного треугольника\n");
     
     break;
+    defalt:
+    printf("Неправильный аргумент\n");
+    return WRONG_INPUT_ERROR;
     }
     return OK;
     
