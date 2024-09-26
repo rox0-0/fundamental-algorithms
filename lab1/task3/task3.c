@@ -45,11 +45,11 @@ int main(int argc, char*argv[])
 { 
     
  
-    if (!(argv[1][2] =='\0' &&(argv[1][0] == '/' || argv[1][0] == '-'))) 
-    { 
-        printf("Неправильный ввод\n"); 
-        return WRONG_INPUT_ERROR; 
-    }; 
+    if (argc < 2 || !(argv[1][2] == '\0' && (argv[1][0] == '/' || argv[1][0] == '-'))) 
+    {
+    printf("Неправильный ввод\n"); 
+    return WRONG_INPUT_ERROR; 
+    }
  
     double eps,a,b, c;
     long int first_number, second_number;
