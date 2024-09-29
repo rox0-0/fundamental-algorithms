@@ -18,7 +18,7 @@ typedef enum
 int main(int argc, char* argv[])
 {
     int a,b;
-    int N =  rand() % (10000 - 10 + 1) ;;
+    int N =  rand() % (10000 - 10 + 1)+10 ;
     int * array = malloc(sizeof(int)*N);
     
     //srand(time(NULL));
