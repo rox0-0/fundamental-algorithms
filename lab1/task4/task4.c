@@ -18,10 +18,12 @@ status delete_arabics(const char *in, const char *out)
     FILE *f2 = fopen(out, "w");
     if (!f1 || !f2)
     {
-        if (f1) fclose(f1);
-        if (f2) fclose(f2);
-        return OPEN_FILE_ERROR;
+    
+    if (f1) fclose(f1);
+    if (f2) fclose(f2);
+    return OPEN_FILE_ERROR;
     }
+
 
     char c;
     while ((c = fgetc(f1)) != EOF)
@@ -134,13 +136,15 @@ int main(int argc, char* argv[])
     const char *in = argv[2];
     char *out = NULL;
     char flag;
-
+    int free_out=0;
     if (argv[1][1] == 'n' && (argc < 4 || strlen(argv[1]) != 3 || (strcmp(argv[2], argv[3]) == 0)))
     {
+        printf("Неправильный ввод1\n"); 
         return WRONG_INPUT_ERROR;
     }
-    else if (argc != 3 || strlen(argv[1]) != 2)
+    else if (argv[1][1] != 'n' &&(argc != 3 || strlen(argv[1]) != 2))
     {
+        printf("Неправильный ввод2\n"); 
         return WRONG_INPUT_ERROR;
     }
 
@@ -148,7 +152,7 @@ int main(int argc, char* argv[])
     {
         flag = argv[1][2];
         out = argv[3];
-        if (strcmp(in, out)==0) return WRONG_INPUT_ERROR;
+        if (strcmp(in, out)==0) {printf("Неправильный ввод3\n"); return WRONG_INPUT_ERROR;}
     }
     else
     {
@@ -156,7 +160,7 @@ int main(int argc, char* argv[])
         char *name = strrchr(in, '/');
         if (name == NULL) name = (char*)in;
         else name++;
-
+        free_out = 1;
         out = (char*)malloc(sizeof(char) * (strlen(name) + 5));
         if (out == NULL)
         {
@@ -170,21 +174,23 @@ int main(int argc, char* argv[])
     switch (flag)
     {
     case 'd':
-        if (delete_arabics(in, out) != OK) return OPEN_FILE_ERROR;
+        if (delete_arabics(in, out) != OK){ printf("Ошибка открытия файла\n");return OPEN_FILE_ERROR;}
         break;
     case 'i':
-        if (count_of_latin(in, out) != OK) return OPEN_FILE_ERROR;
+        if (count_of_latin(in, out) != OK) { printf("Ошибка открытия файла\n");return OPEN_FILE_ERROR;}
         break;
     case 's':
-        if (other_symbols(in, out) != OK) return OPEN_FILE_ERROR;
+        if (other_symbols(in, out) != OK) { printf("Ошибка открытия файла\n");return OPEN_FILE_ERROR;}
         break;
     case 'a':
-        if (ascee(in, out) != OK) return OPEN_FILE_ERROR;
+        if (ascee(in, out) != OK) { printf("Ошибка открытия файла\n");return OPEN_FILE_ERROR;}
         break;
     default:
+        printf("Неправильный ввод\n");
         return WRONG_INPUT_ERROR;
+        break;
     }
 
-    if (out) free(out);
+    if (free_out) free(out);
     return OK;
 }
