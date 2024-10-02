@@ -14,10 +14,12 @@ typedef enum
     WRONG_INPUT_ERROR,
     ANY
 } status; 
- 
-status solution(double eps, double a, double b, double c, double * x1, double * x2)
+
+status solution(double eps, double coeffs[], double *x1, double *x2)
 {
-    if (a < eps)
+    double a = coeffs[0], b = coeffs[1], c = coeffs[2];
+
+    if (fabs(a) < eps)
     {
         if(fabs(b)<eps && fabs(c)< eps) return ANY;
         else if (fabs(b)<eps && fabs(c)>= eps ) return WRONG_INPUT_ERROR;
@@ -28,136 +30,146 @@ status solution(double eps, double a, double b, double c, double * x1, double * 
             return OK;
         }
     }
-    else 
-    {
-    double D=b*b-4*a*c;
-    if (D<eps) return WRONG_INPUT_ERROR;
-    else 
-    {
-        *x1 = (-b + sqrt(D))/(2*a);
-        *x2 = (-b - sqrt(D))/(2*a);
-        return OK;
-    }
-    }
-}
- 
-int main(int argc, char*argv[]) 
-{ 
-    
- 
-    if (argc < 2 || !(argv[1][2] == '\0' && (argv[1][0] == '/' || argv[1][0] == '-'))) 
-    {
-    printf("Неправильный ввод\n"); 
-    return WRONG_INPUT_ERROR; 
-    }
- 
-    double eps,a,b, c;
-    long int first_number, second_number;
-    switch (argv[1][1]) 
-    { 
-    case 'h':
-    
-    if (argc!=6 || (sscanf(argv[2], "%lf", &eps) != 1)||(sscanf(argv[3], "%lf", &a) != 1)||(sscanf(argv[4], "%lf", &b) != 1)
-    ||(sscanf(argv[5], "%lf", &c) != 1)) return WRONG_INPUT_ERROR;
-    if (eps<0)return WRONG_INPUT_ERROR;
-    double x1=0, x2=0;
-    printf("a=%lf, b=%lf, c=%lf\n", a, b, c);
-    if (solution(eps, a, b, c, &x1, &x2) == WRONG_INPUT_ERROR) printf("Решений нет\n") ;
-    else if (solution(eps, a, b, c, &x1, &x2) == ANY){ printf("Решением является любое вещественное число\n");}
-    else if (solution(eps, a, b, c, &x1, &x2) == OK)
-    {
-        if (fabs(x1-x2)<eps) printf("x=%lf\n", x1);
-        else printf("x1=%lf, x2=%lf\n", x1,x2);
-    }
-    
-   
-    printf("a=%lf, b=%lf, c=%lf\n", a, c, b);
-    if (solution(eps, a, c, b, &x1, &x2) == WRONG_INPUT_ERROR) printf("Решений нет\n") ;
-    else if (solution(eps, a, c, b, &x1, &x2) == ANY){ printf("Решением является любое вещественное число\n");}
-    else if (solution(eps, a, c, b, &x1, &x2) == OK)
-    {
-        if (fabs(x1-x2)<eps) printf("x=%lf\n", x1);
-        else printf("x1=%lf, x2=%lf\n", x1,x2);
-    }
-    
-     
-    printf("a=%lf, b=%lf, c=%lf\n", b, a, c);
-    if (solution(eps, b, a, c, &x1, &x2) == WRONG_INPUT_ERROR) printf("Решений нет\n") ;
-    else if (solution(eps, b, a, c, &x1, &x2) == ANY){ printf("Решением является любое вещественное число\n");}
-    else if (solution(eps, b, a, c, &x1, &x2) == OK)
-    {
-        if (fabs(x1-x2)<eps) printf("x=%lf\n", x1);
-        else printf("x1=%lf, x2=%lf\n", x1,x2);
-    }
-    
-   
-    printf("a=%lf, b=%lf, c=%lf\n", b, c, a);
-    if (solution(eps, b, c, a, &x1, &x2) == WRONG_INPUT_ERROR) printf("Решений нет\n") ;
-    else if (solution(eps, b, c, a, &x1, &x2) == ANY){ printf("Решением является любое вещественное число\n");}
-    else if (solution(eps, b, c, a, &x1, &x2) == OK)
-    {
-        if (fabs(x1-x2)<eps) printf("x=%lf\n", x1);
-        else printf("x1=%lf, x2=%lf\n", x1,x2);
-    }
-   
-    printf("a=%lf, b=%lf, c=%lf\n", c, a, b);
-    if (solution(eps, c, a, b, &x1, &x2) == WRONG_INPUT_ERROR) printf("Решений нет\n") ;
-    else if (solution(eps, c, a, b, &x1, &x2) == ANY){ printf("Решением является любое вещественное число\n");}
-    else if (solution(eps, c, a, b, &x1, &x2) == OK)
-    {
-        if (fabs(x1-x2)<eps) printf("x=%lf\n", x1);
-        else printf("x1=%lf, x2=%lf\n", x1,x2);
-    }
-    
-   
-    printf("a=%lf, b=%lf, c=%lf\n", c, b, a);
-    if (solution(eps, c, b, a, &x1, &x2) == WRONG_INPUT_ERROR) printf("Решений нет\n") ;
-    else if (solution(eps, c, b, a, &x1, &x2) == ANY){ printf("Решением является любое вещественное число\n");}
-    else if (solution(eps, c, b, a, &x1, &x2) == OK)
-    {
-        if (fabs(x1-x2)<eps) printf("x=%lf\n", x1);
-        else printf("x1=%lf, x2=%lf\n", x1,x2);
-    }
-    break;
-    case 'm':
-    
-    if (argc!=4 || (sscanf(argv[2], "%ld", &first_number) != 1) || (sscanf(argv[3], "%ld", &second_number) != 1)) return WRONG_INPUT_ERROR;
-    if (first_number==0 || second_number == 0) return WRONG_INPUT_ERROR;
-    if (first_number%second_number==0 && first_number>=second_number)
-    {
-    
-        printf("Число a=%ld кратно b=%ld\n", first_number, second_number );
-    }
     else
     {
-        printf("Введенные числа не кратны друг другу\n");
+        double D = b*b - 4*a*c;
+        if (D < eps) return WRONG_INPUT_ERROR;
+        else
+        {
+            *x1 = (-b + sqrt(D))/(2*a);
+            *x2 = (-b - sqrt(D))/(2*a);
+            return OK;
+        }
     }
-    
-    break;
-    
-    case 't':
-    if (argc!=6 || (sscanf(argv[2], "%lf", &eps) != 1)||(sscanf(argv[3], "%lf", &a) != 1)||(sscanf(argv[4], "%lf", &b) != 1)
-    ||(sscanf(argv[5], "%lf", &c) != 1)) return WRONG_INPUT_ERROR;
-    if (eps<0)return WRONG_INPUT_ERROR;
-    if (fabs(a*a + b*b - c*c )< eps)
+}
+
+void print_solution(double eps, double coeffs[])
+{
+    double x1 = 0, x2 = 0;
+    status result = solution(eps, coeffs, &x1, &x2);
+
+    if (result == WRONG_INPUT_ERROR) {
+        printf("Решений нет\n");
+    } else if (result == ANY) {
+        printf("Решением является любое вещественное число\n");
+    } else if (result == OK) {
+        if (fabs(x1 - x2) < eps)
+            printf("x = %lf\n", x1);
+        else
+            printf("x1 = %lf, x2 = %lf\n", x1, x2);
+    }
+}
+
+void reverse(double arr[], int size)
+{
+    for (int i = 0; i < size / 2; ++i)
     {
-        printf("Существует прямоугольный треугольник с катетами a=%lf, b=%lf, и гипотенузой c=%lf\n", a,b,c);
+        double temp = arr[i];
+        arr[i] = arr[size - 1 - i];
+        arr[size - 1 - i] = temp;
     }
-    else if (fabs(a*a + c*c - b*b) < eps)
+}
+
+int main(int argc, char* argv[])
+{
+    if (argc < 2 || !(argv[1][2] == '\0' && (argv[1][0] == '/' || argv[1][0] == '-')))
     {
-        printf("Существует прямоугольный треугольник с катетами a=%lf, b=%lf, и гипотенузой c=%lf\n", a,c,b);
+        printf("Неправильный ввод\n");
+        return WRONG_INPUT_ERROR;
     }
-    else if (fabs(b*b + c*c - a*a )< eps)
+
+    double eps, coeffs[4];
+    long int first_number, second_number;
+
+    switch (argv[1][1])
     {
-        printf("Существует прямоугольный треугольник с катетами a=%lf, b=%lf, и гипотенузой c=%lf\n", b,c,a);
+        case 'h':
+            if (argc != 6 || (sscanf(argv[2], "%lf", &eps) != 1) ||
+                (sscanf(argv[3], "%lf", &coeffs[0]) != 1) ||
+                (sscanf(argv[4], "%lf", &coeffs[1]) != 1) ||
+                (sscanf(argv[5], "%lf", &coeffs[2]) != 1))
+            {
+                printf("Неправильный ввод\n");
+                return WRONG_INPUT_ERROR;
+            }
+
+            if (eps <= 0) {
+                printf("Неправильный ввод\n");
+                return WRONG_INPUT_ERROR;
+            }
+            double current_coeffs[3] = {coeffs[0], coeffs[1], coeffs[2]};
+            for (int j = 0; j < 6; j++) {
+
+                printf("Перестановка: a=%lf, b=%lf, c=%lf\n", current_coeffs[0], current_coeffs[1], current_coeffs[2]);
+                print_solution(eps, current_coeffs);
+
+                double temp = current_coeffs[0];
+                current_coeffs[0] = current_coeffs[1];
+                current_coeffs[1] = current_coeffs[2];
+                current_coeffs[2] = temp;
+                if (j==2) reverse(current_coeffs, 3);
+
+            }
+
+
+
+
+
+
+
+            break;
+
+        case 'm':
+            if (argc != 4 || (sscanf(argv[2], "%ld", &first_number) != 1) ||
+                (sscanf(argv[3], "%ld", &second_number) != 1))
+            {
+                printf("Неправильный ввод\n");
+                return WRONG_INPUT_ERROR;
+            }
+            if (first_number == 0 || second_number == 0)
+            {
+                printf("Неправильный ввод\n");
+                return WRONG_INPUT_ERROR;
+            }
+            if (first_number % second_number == 0 && first_number >= second_number)
+            {
+                printf("Число a=%ld кратно b=%ld\n", first_number, second_number);
+            }
+            else
+            {
+                printf("Введенные числа не кратны друг другу\n");
+            }
+            break;
+
+        case 't':
+            if (argc != 6 || (sscanf(argv[2], "%lf", &eps) != 1) ||
+                (sscanf(argv[3], "%lf", &coeffs[0]) != 1) ||
+                (sscanf(argv[4], "%lf", &coeffs[1]) != 1) ||
+                (sscanf(argv[5], "%lf", &coeffs[2]) != 1))
+            {
+                printf("Неправильный ввод\n");
+                return WRONG_INPUT_ERROR;
+            }
+
+            if (eps <= 0) {
+                printf("Неправильный ввод\n");
+                return WRONG_INPUT_ERROR;
+            }
+
+            if (fabs(coeffs[0]*coeffs[0] + coeffs[1]*coeffs[1] - coeffs[2]*coeffs[2]) < eps)
+                printf("Существует прямоугольный треугольник с катетами a=%lf, b=%lf, и гипотенузой c=%lf\n", coeffs[0], coeffs[1], coeffs[2]);
+            else if (fabs(coeffs[0]*coeffs[0] + coeffs[2]*coeffs[2] - coeffs[1]*coeffs[1]) < eps)
+                printf("Существует прямоугольный треугольник с катетами a=%lf, b=%lf, и гипотенузой c=%lf\n", coeffs[0], coeffs[2], coeffs[1]);
+            else if (fabs(coeffs[1]*coeffs[1] + coeffs[2]*coeffs[2] - coeffs[0]*coeffs[0]) < eps)
+                printf("Существует прямоугольный треугольник с катетами a=%lf, b=%lf, и гипотенузой c=%lf\n", coeffs[1], coeffs[2], coeffs[0]);
+            else
+                printf("Введенные числа не могут являться длинами сторон прямоугольного треугольника\n");
+            break;
+
+        default:
+            printf("Неправильный флаг\n");
+            return WRONG_INPUT_ERROR;
     }
-    else printf("Введенные числа не могут являться длинами сторон прямоугольного треугольника\n");
-    
-    break;
-    defalt:
-    printf("Неправильный аргумент\n");
-    return WRONG_INPUT_ERROR;
-    }
+
     return OK;
-    
 }
