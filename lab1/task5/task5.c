@@ -5,6 +5,7 @@
 #include <limits.h> 
 #include <math.h> 
 #include <ctype.h> 
+#include <float.h> 
 #define PI 3.14159265358979323846 
 #define E 2.718281828459045235360
 typedef enum  
@@ -18,19 +19,58 @@ status a_sum(double eps,double x, double *res)
 {
     double sum = 1.0;
     double val = 1.0;
-    int n = 1;
-    while (fabs(value) >= eps)
+    int n = 0;
+    while (fabs(val) >= eps)
     {
-        val = val * (x / n);
-        if ( n == INT_MAX - 1|| sum > DBL_MAX - val ) return OVERFLOW;
         n++;
+        val = val * (x / n);
+        if ( n == INT_MAX|| sum > DBL_MAX - val ) return OVERFLOW;
+        
         sum += val;
+        
         
     } 
     
     *res = sum;
     return OK;
 }
+
+status b_sum(double eps,double x, double *res)
+{
+    double sum = 1.0;
+    double val = 1.0;
+    int n = 0;
+    while (fabs(val) >= eps)
+    {
+        n += 2;
+        val =  val * (x * x )/ (n * (n - 1));
+        if (DBL_MAX - val < sum) return OVERFLOW;
+        sum -= val;
+        n += 2;
+        val=val * x * x / (n * (n - 1));
+        if ( n >= INT_MAX - 4|| sum > DBL_MAX - val) return OVERFLOW;
+        sum += val;
+    } 
+    *res = sum;
+    return OK;
+}
+
+status c_sum(double eps,double x, double *res)
+{
+    double sum = 1.0;
+    double val = 1.0;
+    int n = 0;
+    while (fabs(val) >= eps)
+    {
+        n++;
+        val = val *((27 *  pow(x, 2) * pow(n, 3))/( (3 * n - 1) / (3 * n - 2));
+        if ( n == INT_MAX || sum > DBL_MAX - val) return OVERFLOW;
+        sum += val;
+    } 
+    *res = sum;
+    return OK;
+}
+
 
 
 int main() 
