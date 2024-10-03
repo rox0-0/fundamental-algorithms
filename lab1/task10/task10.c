@@ -26,7 +26,7 @@ status checking_input(const char * s, const int base)
         i++;
     }
 
-    if ((strlen(s)>2 && s[0]=='-' && s[1]=='0')|| (strlen(s)>1 && s[0]=='0')) return WRONG_INPUT_ERROR;
+   
     
     if (base>10)
     {
