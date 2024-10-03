@@ -37,10 +37,14 @@ int main(int argc, char* argv[])
     int static_array[N];
     if (argc!=3||sscanf(argv[1], "%d", &a) != 1||(sscanf(argv[2], "%d", &b) != 1))
     {
+        printf("Неправильный ввод\n" );
         return WRONG_INPUT_ERROR;
     }
-    if (a>b) return WRONG_INPUT_ERROR;
-    
+    if (a>b) 
+    {
+        printf("Неправильный ввод\n");
+        return WRONG_INPUT_ERROR;
+    }
     //srand(time(NULL));
     
     for (int i=0; i<N; ++i)
@@ -50,7 +54,11 @@ int main(int argc, char* argv[])
     printf("\n");
     if (swapping(static_array, N)==OK)
     for (int i=0; i<N; ++i) printf("%d ", static_array[i]);
-    else return WRONG_INPUT_ERROR;
+    else  
+    {
+        printf("Неправильный ввод\n");
+        return WRONG_INPUT_ERROR;
+    }
     return OK;
     
 }
