@@ -63,7 +63,7 @@ status c_sum(double eps,double x, double *res)
     while (fabs(val) >= eps)
     {
         n++;
-        val = val *((27 *  pow(x, 2) * pow(n, 3))/( (3 * n - 1) / (3 * n - 2));
+        val = val *((27 *  pow(x, 2) * pow(n, 3))/( (3 * n - 1) / (3 * n - 2)));
         if ( n == INT_MAX || sum > DBL_MAX - val) return OVERFLOW;
         sum += val;
     } 
@@ -71,6 +71,27 @@ status c_sum(double eps,double x, double *res)
     return OK;
 }
 
+status d_sum(double eps,double x, double *res)
+{
+    double s1, s2;
+    double val = 0.5 * pow(x, 2);
+    s1 = -0.5 * pow(x, 2);
+    int n = 1;
+    while (fabs(s2 - s1) >= eps)
+    {
+        s2 = s1;
+        n++;
+        val = val*pow(x, 2) / (2 * n) * (2 * n - 1);
+        if ( n == INT_MAX -1 || s1 > DBL_MAX - val) return OVERFLOW;
+        s1 += val;
+        n++;
+        val = val * pow(x, 2) / (2 * n) * (2 * n - 1);
+        if (DBL_MAX - val < s1) return OVERFLOW;
+        s1 -= val;
+    } 
+    *res = s1;
+    return OK;
+}
 
 
 int main() 
