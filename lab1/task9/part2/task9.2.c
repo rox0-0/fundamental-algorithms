@@ -24,8 +24,9 @@ int main()
     int * a;
     int * b;
     int * c;
-    int a_size = rand()%(10001 - 10) + 10 ;
-    int b_size = rand()%(10001 - 10) + 10 ;
+     int a_size = rand()%(10001 - 10) + 10 ;
+    int b_size = rand()%(10001 - 10) + 10 ; 
+
     
     a = malloc(sizeof (int)*(a_size));
     if (a == NULL)
@@ -49,7 +50,7 @@ int main()
         return MEMORY_ERROR;
         
     }
-
+    printf("массив a\n");
     for (int i = 0; i< a_size; ++i)
     {
         a[i] = rand()%2001 - 1000;
@@ -58,7 +59,7 @@ int main()
         printf("%d ", a[i]);
     }
     printf("\n");
-
+    printf("массив b: ");
     for (int i= 0; i< b_size; ++i)
     {
         
@@ -70,6 +71,7 @@ int main()
 
 
     qsort(b, b_size, sizeof(int), compare);
+    printf("Сортировка:");
     for (int i= 0; i< b_size; ++i)
     {
     
@@ -77,20 +79,39 @@ int main()
     }
     printf("\n");
     int l_bound, r_bound, t;
-    for (int i = 0; i< a_size; ++i)
+    for (int i = 0; i < a_size; ++i)
+{
+    l_bound = 0;
+    r_bound = b_size - 1;
+    while (l_bound <= r_bound)
     {
-        l_bound =0;
-        r_bound = b_size-1;
-        while(r_bound-l_bound > 1)
+        t = (l_bound + r_bound) / 2;
+        if (b[t] == a[i]) 
         {
-            t = (l_bound + r_bound)/2;
-            if (a[i]< b[t]) r_bound = t;
-            else l_bound = t;
+            break;
         }
-        printf("%d %d\n", a[i],b[l_bound]);
-        a[i] += b[l_bound];
+        else if (b[t] < a[i])
+        {
+            l_bound = t + 1;
+        }
+        else
+        {
+            r_bound = t - 1;
+        }
     }
 
+    if (r_bound >= 0 && abs(a[i] - b[r_bound]) <= abs(a[i] - b[l_bound]))
+    {
+        a[i] += b[r_bound]; 
+    }
+    else
+    {
+
+        a[i] += b[l_bound];
+    }
+}
+
+    printf("Результат: ");
     for (int i= 0; i< a_size; ++i)
     {
     
