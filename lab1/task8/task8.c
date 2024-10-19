@@ -86,6 +86,7 @@ status minbase(char * s, int * base)
         {
             osn = (s[i]-'0'+1)<=osn?osn:s[i]-'0'+1;
         }
+        else if (s[i]=='-') continue;
         else return WRONG_INPUT_ERROR;
     }
    // if (osn<2) return WRONG_INPUT_ERROR;
@@ -93,15 +94,22 @@ status minbase(char * s, int * base)
     return OK;
 }
 char * zero_remove(char * s)
-{int length = strlen(s);
+{
+    int length = strlen(s);
     int i = 0;
+    int is_neg = 0;
+    if (s[i] == '-')
+    {
+        i++;
+        is_neg = 1;
+    }
 
-    
     while (s[i] == '0' && i < length - 1) 
     {
         i++;
     }
 
+    if (is_neg) s[--i] = '-';
     
     if (i > 0) 
     {
