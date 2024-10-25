@@ -242,7 +242,7 @@ int main(int argc, char * argv[])
             break;
         
         case 'c':
-            if (argc < 4 || sscanf(argv[3], "%u", &seed) != 1 || argv[3][0]=='-')
+            if (argc < 4 || sscanf(argv[3], "%u", &seed) != 1 || (argv[3][0]=='-' && !(argv[3][1]=='0' && argv[3][2]=='\0')))
             {
                 
                 printf("Неправильный ввод\n");
