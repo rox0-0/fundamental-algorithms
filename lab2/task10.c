@@ -103,15 +103,19 @@ int main()
 
     // Проверка
     double x = 1.9;
-    double res1 = 3.0 * x * x + 2.0 * x + 1.0;
-    double res2 = 0.0;
-    double gg = 1.0;
-    for (int i = 0; i <= degree; ++i) {
-        res2 += gg * result[i];
-        gg *= (x - 3.0);
+    for (int i=0; i<=5; ++i)
+    {
+        
+        x +=1.0;
+        double res1 = 3.0 * x * x + 2.0 * x + 1.0;
+        double res2 = 0.0;
+        double gg = 1.0;
+        for (int i = 0; i <= degree; ++i) {
+            res2 += gg * result[i];
+            gg *= (x - 3.0);
+        }
+        printf("при x = %lf f(x) = %lf, g(x) = %lf\n",x,  res1, res2);
     }
-    printf("res1 = %lf, res2 = %lf\n", res1, res2);
-    
     free(result);
     return 0;
 }
