@@ -90,8 +90,8 @@ status decompose(double eps, double a, double** res, int degree, ...)
 int main()
 {
     double* result;
-    int degree = 1;
-    status st = decompose(0.00001, 3.0, &result, degree, 3.0, 2.0);
+    int degree = 2;
+    status st = decompose(0.00001, 3.0, &result, degree, 1.0, 2.0, 3.0);
     if (st != OK)
     {
         printf("ошибка\n");
@@ -101,6 +101,17 @@ int main()
         printf("g%d = %f\n", i, result[i]);
     }
 
+    // Проверка
+    double x = 1.9;
+    double res1 = 3.0 * x * x + 2.0 * x + 1.0;
+    double res2 = 0.0;
+    double gg = 1.0;
+    for (int i = 0; i <= degree; ++i) {
+        res2 += gg * result[i];
+        gg *= (x - 3.0);
+    }
+    printf("res1 = %lf, res2 = %lf\n", res1, res2);
+    
     free(result);
     return 0;
 }
