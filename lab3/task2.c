@@ -216,7 +216,8 @@ int main()
     }
     else
     {
-        printf("Error occurred: %d\n", st);
+        printf("Ошибка №: %d\n", st);
+        return st;
     }
 
     return 0;
